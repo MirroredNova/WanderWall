@@ -13,7 +13,7 @@ export default async function handler(
   }
   const body = <IGym> req.body;
 
-  conn().catch((error) => console.error(error));
+  conn(process.env.MONGO_CONN_STRING).catch((error) => console.error(error));
   try {
     console.log(body);
     const create = new Gym(body);

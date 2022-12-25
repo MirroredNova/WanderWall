@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { GetStaticProps } from 'next';
+import Head from 'next/head';
 import GymCard from '../../components/GymCard';
 import { IGym } from '../../utils/types';
 
@@ -41,6 +42,12 @@ type Props = {
 
 const Gyms = ({ gyms }: Props) => (
   <GymContainer>
+    <Head>
+      <title>
+        WanderWall - Gyms
+      </title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
     <HeaderContainer>
       <h1>Gyms</h1>
     </HeaderContainer>

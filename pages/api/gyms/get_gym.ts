@@ -6,7 +6,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  conn().catch((error) => console.error(error));
+  conn(process.env.MONGO_CONN_STRING).catch((error) => console.error(error));
   const { query } = req;
   if (!query.id) {
     res.status(400).json({

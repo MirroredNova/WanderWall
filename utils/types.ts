@@ -20,5 +20,6 @@ export interface IGym extends MongoDefaults {
   name: string
   overallRating: number
   description: string
+  location: string
   sections: ISection[]
 }

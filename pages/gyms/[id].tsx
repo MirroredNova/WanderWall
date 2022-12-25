@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import Head from 'next/head';
 import { IGym } from '../../utils/types';
+import GymCardSection from '../../components/GymCardSection';
 
 const GymContainer = styled.div`
   color: ${(props) => props.theme.dark};
@@ -18,10 +20,18 @@ const ImageContainer = styled.div`
 
 const ContentContainer = styled.div`
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  * {
-    border: 1px solid red;
-  }
+  grid-template-columns: 1fr;
+`;
+
+const MainInfoContainer = styled.div`
+  display: flex;
+  padding: 16px;
+  justify-content: space-between;
+  color: ${(props) => props.theme.light};
+  background-color: ${(props) => props.theme.main};
+  margin: 8px 0%;
+  padding: 16px;
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, .15);
 `;
 
 const GymID = () => {
@@ -42,6 +52,14 @@ const GymID = () => {
 
   return (
     <GymContainer>
+      <Head>
+        <title>
+          WanderWall -
+          {' '}
+          {gym?.name}
+        </title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <HeaderContainer>
         <h1>{gym?.name}</h1>
       </HeaderContainer>
@@ -49,12 +67,11 @@ const GymID = () => {
         some images
       </ImageContainer>
       <ContentContainer>
-        <div>General Description</div>
-        <div>section 2</div>
-        <div>section 1</div>
-        <div>section 2</div>
-        <div>section 1</div>
-        <div>section 2</div>
+        <MainInfoContainer>
+          <div>{gym?.description}</div>
+          <div>{gym?.overallRating}</div>
+        </MainInfoContainer>
+        {gym?.sections.map((section, i) => <GymCardSection section={section} key={+i} />)}
       </ContentContainer>
     </GymContainer>
   );

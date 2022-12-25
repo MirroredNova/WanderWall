@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { ISection } from '../utils/types';
+import { IGym, ISection } from '../utils/types';
 import CreateFormSection from './CreateFormSection';
 import Input from './Input';
 
@@ -24,12 +24,7 @@ const Button = styled.button<ButtonProps>`
 `;
 
 type Props = {
-  data: {
-    name: string,
-    overallRating: number,
-    description: string,
-    sections: ISection[]
-  },
+  data: IGym
   // eslint-disable-next-line no-unused-vars
   changeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -74,6 +69,13 @@ const CreateForm = ({ data, changeHandler }: Props) => {
           type="text"
           label="Description"
           value={data.description}
+          onChange={changeHandler}
+        />
+        <Input
+          id="location"
+          type="text"
+          label="Location"
+          value={data.location}
           onChange={changeHandler}
         />
       </MainInputsContainer>

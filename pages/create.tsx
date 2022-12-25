@@ -26,6 +26,7 @@ const Create = () => {
     name: '',
     overallRating: -1,
     description: '',
+    location: '',
     sections: [],
   });
 

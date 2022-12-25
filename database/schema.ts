@@ -10,6 +10,7 @@ const GymSchema = new mongoose.Schema({
   name: String,
   overallRating: Number,
   description: String,
+  location: String,
   sections: [SectionSchema],
 });
 

@@ -6,8 +6,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  conn().catch((error) => console.error(error));
+  conn(process.env.MONGO_CONN_STRING).catch((error) => console.error(error));
 
-  const gyms = await Gym.find({}).select('name overallRating');
+  const gyms = await Gym.find({}).select('name overallRating location');
   res.status(200).json(gyms);
 }
