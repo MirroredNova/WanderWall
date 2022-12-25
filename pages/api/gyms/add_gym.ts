@@ -15,9 +15,8 @@ export default async function handler(
 
   conn(process.env.MONGO_CONN_STRING).catch((error) => console.error(error));
   try {
-    const create = new Gym(body);
-    await create.save();
-    res.status(200).json(create);
+    const object: IGym = await new Gym(body).save();
+    res.status(200).json({ _id: object._id });
   } catch (error) {
     res.status(422).json({
       message: 'Invalid Object',

@@ -19,7 +19,6 @@ const readFile = (
     options.filename = (name, ext, formPath, form) => `${Date.now().toString()}_${formPath.originalFilename}`;
   }
 
-  options.maxFileSize = 4000 * 1024 * 1024;
   const form = formidable(options);
   return new Promise((resolve, reject) => {
     form.parse(req, (err, fields, files) => {

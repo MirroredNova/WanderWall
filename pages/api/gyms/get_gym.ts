@@ -6,6 +6,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  if (req.method !== 'GET') {
+    res.status(405).send({ message: 'Only GET requests allowed' });
+    return;
+  }
+
   conn(process.env.MONGO_CONN_STRING).catch((error) => console.error(error));
   const { query } = req;
   if (!query.id) {

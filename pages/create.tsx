@@ -24,7 +24,7 @@ const CreateFormContainer = styled.form`
 const Create = () => {
   const [data, setData] = useState<IGym>({
     name: '',
-    overallRating: -1,
+    overallRating: 0,
     description: '',
     location: '',
     sections: [],
@@ -51,12 +51,13 @@ const Create = () => {
         },
         body: JSON.stringify(data),
       });
+      const mainResData = await mainRes.json();
+      console.log(mainResData);
 
       // Handle image upload
       const formData = new FormData();
       if (!selectedHeaderFile) return;
       formData.append('image', selectedHeaderFile);
-      console.log(formData);
       const imgRes = await fetch('/api/gyms/add_image', {
         method: 'POST',
         body: formData,
@@ -64,16 +65,14 @@ const Create = () => {
     } catch (err: any) {
       console.log(err.response?.data);
     } finally {
-      setData((prevState) => ({
-        ...prevState,
-        name: '',
-        overallRating: -1,
-        description: '',
-        location: '',
-        sections: [],
-      }));
-      setNumSections(0);
-      console.log(data);
+      // setData({
+      //   name: '',
+      //   overallRating: 0,
+      //   description: '',
+      //   location: '',
+      //   sections: [],
+      // });
+      // setNumSections(0);
     }
   };
 

@@ -4,10 +4,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { IGym } from '../utils/types';
 
-type Props = {
-  gym: IGym
-}
-
 const Card = styled(Link)`
   text-decoration: none;
   color: ${(props) => props.theme.dark};
@@ -39,25 +35,49 @@ const Card = styled(Link)`
   }
 `;
 
-const GymCard = ({ gym }: Props) => (
-  <Card
-    href={`/gyms/${gym._id}`}
-  >
-    <div id="image">
-      <Image src={`/${gym._id}.png`} alt="gym_image" fill />
-    </div>
-    <div id="title">
-      <h3>{gym.name}</h3>
-    </div>
-    <div id="info">
-      <div>
-        Rating:
-        {' '}
-        {gym.overallRating}
+type Props = {
+  gym: IGym
+  refreshData: () => void
+}
+
+const GymCard = ({ gym, refreshData }: Props) => (
+  <>
+    <button
+      type="button"
+      onClick={async () => {
+        const res = await fetch('/api/gyms/delete_gym', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(gym),
+        });
+        if (res.status < 300) refreshData();
+      }}
+    >
+      Delete
+    </button>
+    <Card
+      href={`/gyms/${gym._id}`}
+    >
+      <div id="image">
+        <Image src={`/${gym._id}.png`} alt="gym_image" fill />
       </div>
-      <div>{gym.location}</div>
-    </div>
-  </Card>
+      <div id="title">
+        <h3>{gym.name}</h3>
+      </div>
+      <div id="info">
+        <div>
+          Rating:
+          {' '}
+          {gym.overallRating}
+        </div>
+        <div>{gym.location}</div>
+      </div>
+    </Card>
+
+  </>
+
 );
 
 export default GymCard;
