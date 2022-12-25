@@ -15,7 +15,6 @@ export default async function handler(
 
   conn(process.env.MONGO_CONN_STRING).catch((error) => console.error(error));
   try {
-    console.log(body);
     const create = new Gym(body);
     await create.save();
     res.status(200).json(create);

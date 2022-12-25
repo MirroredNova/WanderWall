@@ -15,7 +15,7 @@ type Props = {
 } & typeof defaultProps
 
 const Input = ({
-  id, type, label, onChange, properties,
+  id, type, label, onChange, value, properties,
 }: Props) => (
   <>
     <label htmlFor={id}>
@@ -24,6 +24,7 @@ const Input = ({
         id={id}
         name={id}
         type={type}
+        value={value}
         onChange={onChange}
         {...properties}
       />

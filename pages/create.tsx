@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import CreateForm from '../components/CreateForm';
-import { IGym } from '../utils/types';
+import { IGym, ISection } from '../utils/types';
 
 const CreateFormContainer = styled.form`
   margin: 25px 0;
@@ -29,18 +29,52 @@ const Create = () => {
     location: '',
     sections: [],
   });
+  const [numSections, setNumSections] = useState<number>(0);
+  const [selectedHeaderFile, setSelectedHeaderFile] = useState<File>();
+
+  const imageChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { target } = event;
+    if (target.files) {
+      const file = target.files[0];
+      setSelectedHeaderFile(file);
+    }
+  };
 
   const submitGymHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(data);
-    const res = await fetch('/api/gyms/add_gym', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    console.log(res);
+    // Handle form data submission
+    try {
+      const mainRes = await fetch('/api/gyms/add_gym', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      // Handle image upload
+      const formData = new FormData();
+      if (!selectedHeaderFile) return;
+      formData.append('image', selectedHeaderFile);
+      console.log(formData);
+      const imgRes = await fetch('/api/gyms/add_image', {
+        method: 'POST',
+        body: formData,
+      });
+    } catch (err: any) {
+      console.log(err.response?.data);
+    } finally {
+      setData((prevState) => ({
+        ...prevState,
+        name: '',
+        overallRating: -1,
+        description: '',
+        location: '',
+        sections: [],
+      }));
+      setNumSections(0);
+      console.log(data);
+    }
   };
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,10 +88,27 @@ const Create = () => {
     }));
   };
 
+  const addSectionHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setNumSections((prevState) => prevState + 1);
+    const newSection: ISection = {
+      name: '',
+      rating: -1,
+      description: '',
+    };
+    data.sections.push(newSection);
+  };
+
   return (
     <div>
       <CreateFormContainer onSubmit={submitGymHandler}>
-        <CreateForm data={data} changeHandler={changeHandler} />
+        <CreateForm
+          data={data}
+          imageChangeHandler={imageChangeHandler}
+          changeHandler={changeHandler}
+          addSectionHandler={addSectionHandler}
+          numSections={numSections}
+        />
       </CreateFormContainer>
     </div>
   );

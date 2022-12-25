@@ -39,28 +39,25 @@ const Card = styled(Link)`
   }
 `;
 
-const GymCard = ({ gym }: Props) => {
-  console.log(gym);
-  return (
-    <Card
-      href={`/gyms/${gym._id}`}
-    >
-      <div id="image">
-        <Image src={`/${gym._id}.png`} alt="gym_image" fill />
+const GymCard = ({ gym }: Props) => (
+  <Card
+    href={`/gyms/${gym._id}`}
+  >
+    <div id="image">
+      <Image src={`/${gym._id}.png`} alt="gym_image" fill />
+    </div>
+    <div id="title">
+      <h3>{gym.name}</h3>
+    </div>
+    <div id="info">
+      <div>
+        Rating:
+        {' '}
+        {gym.overallRating}
       </div>
-      <div id="title">
-        <h3>{gym.name}</h3>
-      </div>
-      <div id="info">
-        <div>
-          Rating:
-          {' '}
-          {gym.overallRating}
-        </div>
-        <div>{gym.location}</div>
-      </div>
-    </Card>
-  );
-};
+      <div>{gym.location}</div>
+    </div>
+  </Card>
+);
 
 export default GymCard;
