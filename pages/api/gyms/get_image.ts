@@ -10,8 +10,8 @@ export default async function handler(
     return;
   }
 
-  const { content } = req.query;
-  const imagesFolder = `${process.cwd()}/public/images/`;
+  const { id, content } = req.query;
+  const imagesFolder = `${process.cwd()}/public/images/${id}`;
 
   if (typeof content !== 'string') {
     res.status(404);
@@ -24,6 +24,9 @@ export default async function handler(
       return;
     }
 
-    console.log(files);
+    let filePaths = files.filter((file) => file.includes(content));
+    filePaths = filePaths.map((file) => `/images/${id}/${file}`);
+
+    res.status(200).json({ filePaths });
   });
 }

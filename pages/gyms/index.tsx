@@ -1,10 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import styled from 'styled-components';
-import { GetServerSideProps, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import GymCard from '../../components/GymCard';
+import GymCard from '../../components/Gyms/GymCard';
 import { IGym } from '../../utils/types';
 
 const GymContainer = styled.div`
@@ -60,7 +60,7 @@ const Gyms = ({ gyms }: Props) => {
       </HeaderContainer>
       <CardContainer>
         {gyms.map((gym: IGym) => (
-          <GymCard key={gym._id} gym={gym} refreshData={refreshData} />
+          <GymCard key={gym._id} gym={gym} imagePath="/images/63a933d45643748f767fb8cb/header.jpg" refreshData={refreshData} />
         ))}
       </CardContainer>
     </GymContainer>

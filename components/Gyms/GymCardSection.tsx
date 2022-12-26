@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ISection } from '../utils/types';
+import { ISection } from '../../utils/types';
 
 const SectionContainer = styled.div`
   display: grid;

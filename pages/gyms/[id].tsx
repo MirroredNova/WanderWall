@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Head from 'next/head';
 import { IGym } from '../../utils/types';
-import GymCardSection from '../../components/GymCardSection';
+import GymCardSection from '../../components/Gyms/GymCardSection';
 
 const GymContainer = styled.div`
   color: ${(props) => props.theme.dark};
