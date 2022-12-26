@@ -92,7 +92,7 @@ const Create = () => {
     setNumSections((prevState) => prevState + 1);
     const newSection: ISection = {
       name: '',
-      rating: -1,
+      rating: 0,
       description: '',
     };
     data.sections.push(newSection);

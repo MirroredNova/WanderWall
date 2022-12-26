@@ -10,12 +10,15 @@ type Props = {
 const CreateFormSection = ({ section }: Props) => {
   const handleSectionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
+    console.log(value);
+    console.log(name);
+    console.log(section);
     if (name === 'name') {
-      section.name = value;
+      section.name += value;
     } else if (name === 'rating') {
-      section.rating = +value;
+      section.rating += +value;
     } else if (name === 'description') {
-      section.description = value;
+      section.description += value;
     }
   };
 
