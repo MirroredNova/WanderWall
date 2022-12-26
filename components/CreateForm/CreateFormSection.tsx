@@ -1,25 +1,19 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
-import { ISection } from '../utils/types';
-import Input from './Input';
+import { ISection } from '../../utils/types';
+import Input from '../Shared/Input';
 
 type Props = {
+  sectionId: number
   section: ISection
+  // eslint-disable-next-line no-unused-vars
+  sectionChangeHandler: (value: string, name: string, num: number) => void
 }
 
-const CreateFormSection = ({ section }: Props) => {
+const CreateFormSection = ({ sectionId, section, sectionChangeHandler }: Props) => {
   const handleSectionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
-    console.log(value);
-    console.log(name);
-    console.log(section);
-    if (name === 'name') {
-      section.name += value;
-    } else if (name === 'rating') {
-      section.rating += +value;
-    } else if (name === 'description') {
-      section.description += value;
-    }
+    sectionChangeHandler(value, name, sectionId);
   };
 
   return (

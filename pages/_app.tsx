@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Roboto } from '@next/font/google';
 import styled, { ThemeProvider } from 'styled-components';
-import Nav from '../components/Nav';
+import Nav from '../components/Layout/Nav';
 import theme from '../utils/theme';
 
 const Main = styled.main`

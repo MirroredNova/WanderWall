@@ -40,44 +40,46 @@ type Props = {
   refreshData: () => void
 }
 
-const GymCard = ({ gym, refreshData }: Props) => (
-  <>
-    {/* <button
-      type="button"
-      onClick={async () => {
-        const res = await fetch('/api/gyms/delete_gym', {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(gym),
-        });
-        if (res.status < 300) refreshData();
-      }}
-    >
-      Delete
-    </button> */}
-    <Card
-      href={`/gyms/${gym._id}`}
-    >
-      <div id="image">
-        <Image src={`/images/${gym._id}.png`} alt="gym_image" fill />
-      </div>
-      <div id="title">
-        <h3>{gym.name}</h3>
-      </div>
-      <div id="info">
-        <div>
-          Rating:
-          {' '}
-          {gym.overallRating}
+const GymCard = ({ gym, refreshData }: Props) => {
+  const imagePath = `/images/${gym._id}/header.jpg`;
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={async () => {
+          const res = await fetch('/api/gyms/delete_gym', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(gym),
+          });
+          if (res.status < 300) refreshData();
+        }}
+      >
+        Delete
+      </button>
+      <Card
+        href={`/gyms/${gym._id}`}
+      >
+        <div id="image">
+          <Image src={imagePath} alt="gym_image" fill />
         </div>
-        <div>{gym.location}</div>
-      </div>
-    </Card>
-
-  </>
-
-);
+        <div id="title">
+          <h3>{gym.name}</h3>
+        </div>
+        <div id="info">
+          <div>
+            Rating:
+            {' '}
+            {gym.overallRating}
+          </div>
+          <div>{gym.location}</div>
+        </div>
+      </Card>
+    </>
+  );
+};
 
 export default GymCard;
