@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import fs from 'fs';
+import { IImgFolder } from '../../../utils/types';
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,12 +19,15 @@ export default async function handler(
     return;
   }
 
-  fs.readdir(imagesFolder, (err, files) => {
-    if (err) {
-      res.status(500).json({ message: err.message });
-      return;
-    }
-
-    console.log(files);
+  const folders: IImgFolder[] = [];
+  const gymFolders = fs.readdirSync(imagesFolder);
+  gymFolders.forEach((folder) => {
+    let imageFiles = fs.readdirSync(imagesFolder + folder);
+    imageFiles = imageFiles.filter((file) => file.includes(content));
+    folders.push({
+      id: folder,
+      images: imageFiles,
+    });
   });
+  res.status(200).json({ folders });
 }

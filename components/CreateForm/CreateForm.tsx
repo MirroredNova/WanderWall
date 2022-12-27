@@ -135,7 +135,7 @@ const CreateForm = () => {
     <CreateFormContainer onSubmit={submitGymHandler}>
       <h1>Add New Gym</h1>
       <MainInputsContainer>
-        <ImageInput id="coverImage" label="Cover Image" imageChangeHandler={imageChangeHandler} />
+        <ImageInput id="coverImage" label="Cover Image" imageChangeHandler={imageChangeHandler} multiple={false} />
         <Input
           id="name"
           type="text"

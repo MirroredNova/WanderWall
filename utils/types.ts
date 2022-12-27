@@ -16,6 +16,11 @@ export interface ISection {
   description: string
 }
 
+export interface IImgFolder {
+  id: string,
+  images: string[]
+}
+
 export interface IGym extends MongoDefaults {
   name: string
   overallRating: number

@@ -12,6 +12,7 @@ const Card = styled(Link)`
   margin: 20px;
   box-shadow: 0 5px 15px 0 rgba(0, 0, 0, .25);
   width: 300px;
+  height: 350px;
   transition: all .2s ease-in-out;
 
   #image {
@@ -43,7 +44,7 @@ type Props = {
 
 const GymCard = ({ gym, imagePath, refreshData }: Props) => (
   <>
-    <button
+    {/* <button
       type="button"
       onClick={async () => {
         const res = await fetch('/api/gyms/delete_gym', {
@@ -57,7 +58,7 @@ const GymCard = ({ gym, imagePath, refreshData }: Props) => (
       }}
     >
       Delete
-    </button>
+    </button> */}
     <Card
       href={`/gyms/${gym._id}`}
     >
