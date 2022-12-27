@@ -43,7 +43,7 @@ export default async function handler(
   const { query } = req;
 
   if (typeof query.id !== 'string' || typeof query.name !== 'string') {
-    res.status(404).send({ message: 'Query parameters invalid' });
+    res.status(400).send({ message: 'Query parameters invalid' });
     return;
   }
 

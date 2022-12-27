@@ -5,10 +5,6 @@ import CreateFormSection from './CreateFormSection';
 import ImageInput from '../Shared/ImageInput';
 import Input from '../Shared/Input';
 
-const MainInputsContainer = styled.div`
-  
-`;
-
 interface ButtonProps {
   themeColor: string
 }
@@ -54,10 +50,9 @@ const CreateForm = () => {
   const [selectedHeaderFile, setSelectedHeaderFile] = useState<File>();
 
   const imageChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { target } = event;
-    if (target.files) {
-      const file = target.files[0];
-      setSelectedHeaderFile(file);
+    const { files } = event.target;
+    if (files) {
+      setSelectedHeaderFile(files[0]);
     }
   };
 
@@ -78,11 +73,10 @@ const CreateForm = () => {
       const formData = new FormData();
       if (!selectedHeaderFile) return;
       formData.append('image', selectedHeaderFile);
-      const imgRes = await fetch(`/api/gyms/add_image?id=${mainResData._id}&name=header`, {
+      await fetch(`/api/gyms/add_image?id=${mainResData._id}&name=header`, {
         method: 'POST',
         body: formData,
       });
-      console.log(await imgRes.json());
     } catch (err: any) {
       console.log(err.response?.data);
     } finally {
@@ -98,10 +92,7 @@ const CreateForm = () => {
   };
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { type, name } = event.target;
-    const value = type === 'checkbox'
-      ? event.target.checked
-      : event.target.value;
+    const { name, value } = event.target;
     setData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -134,8 +125,8 @@ const CreateForm = () => {
   return (
     <CreateFormContainer onSubmit={submitGymHandler}>
       <h1>Add New Gym</h1>
-      <MainInputsContainer>
-        <ImageInput id="coverImage" label="Cover Image" imageChangeHandler={imageChangeHandler} multiple={false} />
+      <div>
+        <ImageInput id="coverImage" label="Cover Image" imageChangeHandler={imageChangeHandler} multiple={false} required />
         <Input
           id="name"
           type="text"
@@ -165,7 +156,7 @@ const CreateForm = () => {
           value={data.location}
           onChange={changeHandler}
         />
-      </MainInputsContainer>
+      </div>
       <div>
         {numSections !== 0 && <h1>Custom Sections</h1>}
         {data.sections.map((obj, i) => (

@@ -1,8 +1,6 @@
-export type ResponseFuncs = {
-  GET?: Function
-  POST?: Function
-  PUT?: Function
-  DELETE?: Function
+export interface IImgFolder {
+  id: string,
+  images: string[]
 }
 
 type MongoDefaults = {
@@ -14,11 +12,6 @@ export interface ISection {
   name: string
   rating: number
   description: string
-}
-
-export interface IImgFolder {
-  id: string,
-  images: string[]
 }
 
 export interface IGym extends MongoDefaults {

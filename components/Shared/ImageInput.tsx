@@ -4,12 +4,13 @@ type Props = {
   id: string
   label: string
   multiple: boolean
+  required: boolean
   // eslint-disable-next-line no-unused-vars
   imageChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const ImageInput = ({
-  id, label, multiple, imageChangeHandler,
+  id, label, multiple, required, imageChangeHandler,
 }: Props) => (
   <>
     <label htmlFor={id}>
@@ -20,6 +21,7 @@ const ImageInput = ({
         type="file"
         multiple={multiple}
         onChange={imageChangeHandler}
+        required={required}
       />
     </label>
     <br />

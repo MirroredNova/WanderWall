@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import conn from '../../../database/connection';
+import connectDB from '../../../database/connection';
 import Gym from '../../../database/schema';
 
 export default async function handler(
@@ -11,7 +11,7 @@ export default async function handler(
     return;
   }
 
-  conn(process.env.MONGO_CONN_STRING).catch((error) => console.error(error));
+  await connectDB(process.env.MONGO_CONN_STRING).catch((error) => console.error(error));
   const { query } = req;
   if (!query.id) {
     res.status(400).json({

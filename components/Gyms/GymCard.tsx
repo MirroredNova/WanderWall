@@ -19,6 +19,10 @@ const Card = styled(Link)`
     position: relative;
     width: 100%;
     height: 300px;
+
+    img {
+      object-fit: cover;
+    }
   }
 
   #title {

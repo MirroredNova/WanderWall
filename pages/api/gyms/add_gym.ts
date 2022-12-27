@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import conn from '../../../database/connection';
+import connectDB from '../../../database/connection';
 import Gym from '../../../database/schema';
 import { IGym } from '../../../utils/types';
 
@@ -13,7 +13,7 @@ export default async function handler(
   }
   const body = <IGym> req.body;
 
-  conn(process.env.MONGO_CONN_STRING).catch((error) => console.error(error));
+  await connectDB(process.env.MONGO_CONN_STRING).catch((error) => console.error(error));
   try {
     const object: IGym = await new Gym(body).save();
     res.status(200).json({ _id: object._id });
