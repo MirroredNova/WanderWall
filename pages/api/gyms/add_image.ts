@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import formidable from 'formidable';
 import { NextApiRequest, NextApiResponse } from 'next';
 import path from 'path';
@@ -7,33 +8,6 @@ export const config = {
   api: {
     bodyParser: false,
   },
-};
-
-const readFile = (
-  req: NextApiRequest,
-  id: string,
-  fileName: string,
-  saveLocally: boolean,
-): Promise<{fields: formidable.Fields; files: formidable.Files}> => {
-  console.log(id);
-
-  const options: formidable.Options = {};
-  if (saveLocally) {
-    options.uploadDir = path.join(process.cwd(), `/public/images/${id}`);
-    options.filename = (name, ext, formPath) => {
-      const patt1 = /\.[0-9a-z]+$/i;
-      const fileExt = formPath.originalFilename!.match(patt1);
-      return `${fileName}${fileExt![0]}`;
-    };
-  }
-
-  const form = formidable(options);
-  return new Promise((resolve, reject) => {
-    form.parse(req, (err, fields, files) => {
-      if (err) reject(err);
-      resolve({ fields, files });
-    });
-  });
 };
 
 export default async function handler(
@@ -52,12 +26,24 @@ export default async function handler(
     return;
   }
 
+  const mainDir = `${process.cwd()}/public/images/${query.id}`;
+
   try {
-    await fs.readdir(path.join(`${process.cwd()}/public`, `/images/${query.id}`));
+    await fs.readdir(mainDir);
   } catch (err: any) {
-    await fs.mkdir(path.join(`${process.cwd()}/public`, `/images/${query.id}`));
+    await fs.mkdir(mainDir);
   }
 
-  const file = await readFile(req, query.id, query.name, true);
-  res.json(file);
+  const form = new formidable.IncomingForm();
+  const files = [];
+
+  form.parse(req);
+
+  form.on('fileBegin', (name, file) => {
+    const patt1 = /\.[0-9a-z]+$/i;
+    const fileExt = file.originalFilename!.match(patt1);
+    file.filepath = `${mainDir}/${query.name}${fileExt}`;
+  });
+
+  res.status(200).json({ message: 'yippe' });
 }

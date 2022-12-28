@@ -64,9 +64,16 @@ const Gyms = ({ gyms, images }: Props) => {
       </HeaderContainer>
       <CardContainer>
         {gyms.map((gym: IGym) => {
+          let folder = '';
+          let file = '';
           const headerImage = images.filter((image) => (image.id === gym._id))[0];
+          if (headerImage) {
+            folder = headerImage.id;
+            // eslint-disable-next-line prefer-destructuring
+            file = headerImage.images[0];
+          }
           return (
-            <GymCard key={gym._id} gym={gym} imagePath={`/images/${headerImage.id}/${headerImage.images[0]}`} refreshData={refreshData} />
+            <GymCard key={gym._id} gym={gym} imagePath={`/images/${folder}/${file}`} refreshData={refreshData} />
           );
         })}
       </CardContainer>

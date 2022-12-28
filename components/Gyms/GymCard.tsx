@@ -48,7 +48,7 @@ type Props = {
 
 const GymCard = ({ gym, imagePath, refreshData }: Props) => (
   <>
-    {/* <button
+    <button
       type="button"
       onClick={async () => {
         const res = await fetch('/api/gyms/delete_gym', {
@@ -62,7 +62,7 @@ const GymCard = ({ gym, imagePath, refreshData }: Props) => (
       }}
     >
       Delete
-    </button> */}
+    </button>
     <Card
       href={`/gyms/${gym._id}`}
     >

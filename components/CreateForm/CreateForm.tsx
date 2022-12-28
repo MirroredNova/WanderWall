@@ -48,12 +48,27 @@ const CreateForm = () => {
   });
   const [numSections, setNumSections] = useState<number>(0);
   const [selectedHeaderFile, setSelectedHeaderFile] = useState<File>();
+  const [selectedContentFiles, setSelectedContentFiles] = useState<File>();
 
   const imageChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     if (files) {
       setSelectedHeaderFile(files[0]);
     }
+  };
+
+  const multipleImageChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    if (!files) return;
+    const filesList: File[] = [];
+
+    for (let i = 0; i < files.length; i += 1) {
+      const file = files.item(i);
+      if (!file) return;
+      filesList.push(file);
+    }
+
+    setSelectedContentFiles(filesList[0]);
   };
 
   const submitGymHandler = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -69,13 +84,23 @@ const CreateForm = () => {
       });
       const mainResData = await mainRes.json();
 
-      // Handle image upload
-      const formData = new FormData();
+      // Handle Cover image upload
+      const headerFormData = new FormData();
       if (!selectedHeaderFile) return;
-      formData.append('image', selectedHeaderFile);
+      headerFormData.append('image', selectedHeaderFile);
       await fetch(`/api/gyms/add_image?id=${mainResData._id}&name=header`, {
         method: 'POST',
-        body: formData,
+        body: headerFormData,
+      });
+
+      // Handle Content images upload
+      const contentFormData: any = new FormData();
+      if (!selectedHeaderFile) return;
+      console.log(selectedContentFiles);
+      contentFormData.append('images', selectedContentFiles);
+      await fetch(`/api/gyms/add_image?id=${mainResData._id}&name=content`, {
+        method: 'POST',
+        body: contentFormData,
       });
     } catch (err: any) {
       console.log(err.response?.data);
@@ -123,7 +148,7 @@ const CreateForm = () => {
   };
 
   return (
-    <CreateFormContainer onSubmit={submitGymHandler}>
+    <CreateFormContainer onSubmit={submitGymHandler} encType="multipart/form-data">
       <h1>Add New Gym</h1>
       <div>
         <ImageInput id="coverImage" label="Cover Image" imageChangeHandler={imageChangeHandler} multiple={false} required />
@@ -156,6 +181,7 @@ const CreateForm = () => {
           value={data.location}
           onChange={changeHandler}
         />
+        <ImageInput id="contentImage" label="Content Images" imageChangeHandler={multipleImageChangeHandler} multiple required />
       </div>
       <div>
         {numSections !== 0 && <h1>Custom Sections</h1>}
