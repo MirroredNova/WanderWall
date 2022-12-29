@@ -48,7 +48,7 @@ const CreateForm = () => {
   });
   const [numSections, setNumSections] = useState<number>(0);
   const [selectedHeaderFile, setSelectedHeaderFile] = useState<File>();
-  const [selectedContentFiles, setSelectedContentFiles] = useState<File>();
+  const [selectedContentFiles, setSelectedContentFiles] = useState<File[]>();
 
   const imageChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -68,7 +68,7 @@ const CreateForm = () => {
       filesList.push(file);
     }
 
-    setSelectedContentFiles(filesList[0]);
+    setSelectedContentFiles(filesList);
   };
 
   const submitGymHandler = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -94,13 +94,14 @@ const CreateForm = () => {
       });
 
       // Handle Content images upload
-      const contentFormData: any = new FormData();
-      if (!selectedHeaderFile) return;
-      console.log(selectedContentFiles);
-      contentFormData.append('images', selectedContentFiles);
-      await fetch(`/api/gyms/add_image?id=${mainResData._id}&name=content`, {
-        method: 'POST',
-        body: contentFormData,
+      if (!selectedContentFiles) return;
+      selectedContentFiles.forEach(async (file, i) => {
+        const contentFormData: any = new FormData();
+        contentFormData.append('images', file);
+        await fetch(`/api/gyms/add_image?id=${mainResData._id}&name=content${i}`, {
+          method: 'POST',
+          body: contentFormData,
+        });
       });
     } catch (err: any) {
       console.log(err.response?.data);

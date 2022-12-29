@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import formidable from 'formidable';
 import { NextApiRequest, NextApiResponse } from 'next';
-import path from 'path';
 import fs from 'fs/promises';
 
 export const config = {
@@ -35,7 +34,6 @@ export default async function handler(
   }
 
   const form = new formidable.IncomingForm();
-  const files = [];
 
   form.parse(req);
 
