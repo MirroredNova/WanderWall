@@ -21,3 +21,7 @@ export interface IGym extends MongoDefaults {
   location: string
   sections: ISection[]
 }
+
+export interface IApiResGym extends IGym {
+  imagePaths: string[]
+}

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Head from 'next/head';
-import { IGym } from '../../utils/types';
+import Image from 'next/image';
+import { GetServerSideProps } from 'next';
+import { IApiResGym } from '../../utils/types';
 import GymCardSection from '../../components/Gyms/GymCardSection';
 
 const GymContainer = styled.div`
@@ -36,7 +38,7 @@ const MainInfoContainer = styled.div`
 
 const GymID = () => {
   const router = useRouter();
-  const [gym, setGym] = useState<IGym>();
+  const [gym, setGym] = useState<IApiResGym>();
 
   useEffect(() => {
     const apiCall = async (id: string | string[] | undefined) => {
@@ -64,7 +66,7 @@ const GymID = () => {
         <h1>{gym?.name}</h1>
       </HeaderContainer>
       <ImageContainer>
-        some images
+        {gym?.imagePaths.map((image, i) => <Image src={`/images/${gym?._id}/${image}`} alt="gym_image" key={+i} width="100" height="100" />)}
       </ImageContainer>
       <ContentContainer>
         <MainInfoContainer>
