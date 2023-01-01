@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Head from 'next/head';
-import Image from 'next/image';
-import { GetServerSideProps } from 'next';
 import { IApiResGym } from '../../utils/types';
 import GymCardSection from '../../components/Gyms/GymCardSection';
+import GymCardGallery from '../../components/Gyms/GymCardGallery';
 
 const GymContainer = styled.div`
   color: ${(props) => props.theme.dark};
@@ -66,7 +65,9 @@ const GymID = () => {
         <h1>{gym?.name}</h1>
       </HeaderContainer>
       <ImageContainer>
-        {gym?.imagePaths.map((image, i) => <Image src={`/images/${gym?._id}/${image}`} alt="gym_image" key={+i} width="100" height="100" />)}
+        {gym?.imagePaths
+          && gym?._id
+          && <GymCardGallery images={gym?.imagePaths} gymId={gym?._id} />}
       </ImageContainer>
       <ContentContainer>
         <MainInfoContainer>
