@@ -28,9 +28,9 @@ const CardContainer = styled.div`
 `;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const gymRes = await fetch('http://localhost:3000/api/gyms/get_gyms');
+  const gymRes = await fetch(`${process.env.API_URL}/api/gyms/get_gyms`);
   const gymData = await gymRes.json();
-  const imgRes = await fetch('http://localhost:3000/api/gyms/get_images?content=header');
+  const imgRes = await fetch(`${process.env.API_URL}/api/gyms/get_images?content=header`);
   const imgData = (await imgRes.json()).folders;
   return {
     props: {
