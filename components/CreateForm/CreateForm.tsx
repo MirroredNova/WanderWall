@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { IGym, ISection } from '../../utils/types';
+import { IApiResGym, IGym, ISection } from '../../utils/types';
 import CreateFormSection from './CreateFormSection';
 import ImageInput from '../Shared/ImageInput';
 import Input from '../Shared/Input';
@@ -38,6 +38,8 @@ const CreateFormContainer = styled.form`
   }
 `;
 
+const url = 'https://api.cloudinary.com/v1_1/dhhcxidye/image/upload';
+
 const CreateForm = () => {
   const [data, setData] = useState<IGym>({
     name: '',
@@ -71,38 +73,44 @@ const CreateForm = () => {
     setSelectedContentFiles(filesList);
   };
 
+  const uploadImage = async (contentFile: File): Promise<string> => {
+    const contentImageForm: any = new FormData();
+    contentImageForm.append('file', contentFile);
+    contentImageForm.append('upload_preset', 'yhgfdywb');
+    const contentRes = await fetch(url, {
+      method: 'POST',
+      body: contentImageForm,
+    });
+    const contentResData = await contentRes.json();
+    return contentResData.url;
+  };
+
   const submitGymHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Handle form data submission
     try {
+      const formData: IApiResGym = {
+        ...(JSON.parse(JSON.stringify(data))),
+        imagePaths: [],
+      };
+
+      const tempImagePaths = [];
+      tempImagePaths.push(uploadImage(selectedHeaderFile!));
+      tempImagePaths.push(...selectedContentFiles!.map((file) => {
+        const urlTemp = uploadImage(file!);
+        return urlTemp;
+      }));
+      formData.imagePaths.push(...await Promise.all(tempImagePaths));
+
+      // Handle main gym database creation
       const mainRes = await fetch('/api/gyms/add_gym', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(formData),
       });
-      const mainResData = await mainRes.json();
-
-      // Handle Cover image upload
-      const headerFormData = new FormData();
-      if (!selectedHeaderFile) return;
-      headerFormData.append('image', selectedHeaderFile);
-      await fetch(`/api/gyms/add_image?id=${mainResData._id}&name=header`, {
-        method: 'POST',
-        body: headerFormData,
-      });
-
-      // Handle Content images upload
-      if (!selectedContentFiles) return;
-      selectedContentFiles.forEach(async (file, i) => {
-        const contentFormData: any = new FormData();
-        contentFormData.append('images', file);
-        await fetch(`/api/gyms/add_image?id=${mainResData._id}&name=content${i}`, {
-          method: 'POST',
-          body: contentFormData,
-        });
-      });
+      await mainRes.json();
     } catch (err: any) {
       console.log(err.response?.data);
     } finally {
