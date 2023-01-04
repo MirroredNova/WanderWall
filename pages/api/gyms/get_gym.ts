@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import fs from 'fs';
 import connectDB from '../../../database/connection';
 import Gym from '../../../database/schema';
+import { IApiResGym } from '../../../utils/types';
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,20 +21,12 @@ export default async function handler(
   }
 
   const gymRes = await Gym.findOne({ _id: query.id });
-  const gyms = gymRes.toObject();
+  const gyms: IApiResGym = gymRes.toObject();
   if (!gyms) {
     res.status(404).json({
       message: 'This gym could not be found.',
     });
   }
-
-  const mainDir = `${process.cwd()}/public/images/${query.id}`;
-
-  const gymImagePaths: string[] = [];
-  fs.readdirSync(mainDir).forEach((file) => {
-    gymImagePaths.push(file);
-  });
-  gyms.imagePaths = gymImagePaths;
 
   res.status(200).json(gyms);
 }

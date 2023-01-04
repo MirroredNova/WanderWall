@@ -1,8 +1,3 @@
-export interface IImgFolder {
-  id: string,
-  images: string[]
-}
-
 type MongoDefaults = {
   __v?: number
   _id?: string

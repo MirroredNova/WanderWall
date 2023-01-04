@@ -65,9 +65,7 @@ const GymID = () => {
         <h1>{gym?.name}</h1>
       </HeaderContainer>
       <ImageContainer>
-        {gym?.imagePaths
-          && gym?._id
-          && <GymCardGallery images={gym?.imagePaths} gymId={gym?._id} />}
+        {gym?.imagePaths && <GymCardGallery imagePaths={gym.imagePaths} />}
       </ImageContainer>
       <ContentContainer>
         <MainInfoContainer>
