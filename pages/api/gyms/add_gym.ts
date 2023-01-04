@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import connectDB from '../../../database/connection';
 import Gym from '../../../database/schema';
-import { IGym } from '../../../utils/types';
+import { IApiResGym } from '../../../utils/types';
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,11 +11,12 @@ export default async function handler(
     res.status(405).send({ message: 'Only POST requests allowed' });
     return;
   }
-  const body = <IGym> req.body;
+  const body = <IApiResGym> req.body;
+  console.log(body);
 
   await connectDB(process.env.MONGO_CONN_STRING).catch((error) => console.error(error));
   try {
-    const object: IGym = await new Gym(body).save();
+    const object: IApiResGym = await new Gym(body).save();
     res.status(200).json({ _id: object._id });
   } catch (error) {
     res.status(422).json({

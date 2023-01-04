@@ -17,11 +17,10 @@ const SwiperSlideContainer = styled(SwiperSlide)`
 `;
 
 type Props = {
-  images: string[]
-  gymId: string
+  imagePaths: string[]
 }
 
-const GymCardGallery = ({ images, gymId }: Props) => (
+const GymCardGallery = ({ imagePaths }: Props) => (
   <Swiper
     pagination={{
       type: 'fraction',
@@ -30,9 +29,9 @@ const GymCardGallery = ({ images, gymId }: Props) => (
     modules={[Pagination, Navigation]}
     className="mySwiper"
   >
-    {images.map((image, i) => (
+    {imagePaths.map((image, i) => (
       <SwiperSlideContainer key={+i} style={{ paddingBottom: '5px' }}>
-        <Image src={`/images/${gymId}/${image}`} alt="gym_image" width={1000} height={1000} />
+        <Image src={image} alt="gym_image" width={1000} height={1000} />
       </SwiperSlideContainer>
     ))}
   </Swiper>

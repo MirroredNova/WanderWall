@@ -12,6 +12,7 @@ const GymSchema = new mongoose.Schema({
   description: String,
   location: String,
   sections: [SectionSchema],
+  imagePaths: [String],
 });
 
 const gym = mongoose.models.Gym || mongoose.model('Gym', GymSchema);
