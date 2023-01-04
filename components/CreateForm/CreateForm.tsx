@@ -38,8 +38,6 @@ const CreateFormContainer = styled.form`
   }
 `;
 
-const url = 'https://api.cloudinary.com/v1_1/dhhcxidye/image/upload';
-
 const CreateForm = () => {
   const [data, setData] = useState<IGym>({
     name: '',
@@ -74,9 +72,10 @@ const CreateForm = () => {
   };
 
   const uploadImage = async (contentFile: File): Promise<string> => {
+    const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`;
     const contentImageForm: any = new FormData();
     contentImageForm.append('file', contentFile);
-    contentImageForm.append('upload_preset', 'yhgfdywb');
+    contentImageForm.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
     const contentRes = await fetch(url, {
       method: 'POST',
       body: contentImageForm,
