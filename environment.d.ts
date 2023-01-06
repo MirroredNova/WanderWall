@@ -5,5 +5,6 @@ declare namespace NodeJS {
     API_URL: string;
     NEXT_PUBLIC_CLOUDINARY_NAME: string;
     NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET: string;
+    ADMIN_PASSWORD: string;
   }
 }

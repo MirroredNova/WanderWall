@@ -81,7 +81,6 @@ const Nav = () => (
       <li><Link href="/gyms">Gyms</Link></li>
       <li><Link href="/travel">Travel</Link></li>
       <li><Link href="/about">About Me</Link></li>
-      <li><Link href="/create">Create</Link></li>
     </NavList>
   </NavBar>
 );
