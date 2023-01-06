@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import styled from 'styled-components';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import GymCard from '../../components/Gyms/GymCard';
@@ -27,7 +27,7 @@ const CardContainer = styled.div`
   align-items: center;
 `;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const gymRes = await fetch(`${process.env.API_URL}/api/gyms/get_gyms`);
   const gymData = await gymRes.json();
   return {
@@ -41,33 +41,26 @@ type Props = {
   gyms: IApiResGym[]
 }
 
-const Gyms = ({ gyms }: Props) => {
-  const router = useRouter();
-  const refreshData = () => {
-    router.replace(router.asPath);
-  };
-
-  return (
-    <GymContainer>
-      <Head>
-        <title>
-          WanderWall - Gyms
-        </title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <HeaderContainer>
-        <h1>Gyms</h1>
-      </HeaderContainer>
-      <CardContainer>
-        {gyms.map((gym: IApiResGym) => {
-          const headerImage = gym.imagePaths[0];
-          return (
-            <GymCard key={gym._id} gym={gym} imagePath={headerImage} refreshData={refreshData} />
-          );
-        })}
-      </CardContainer>
-    </GymContainer>
-  );
-};
+const Gyms = ({ gyms }: Props) => (
+  <GymContainer>
+    <Head>
+      <title>
+        WanderWall - Gyms
+      </title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
+    <HeaderContainer>
+      <h1>Gyms</h1>
+    </HeaderContainer>
+    <CardContainer>
+      {gyms.map((gym: IApiResGym) => {
+        const headerImage = gym.imagePaths[0];
+        return (
+          <GymCard key={gym._id} gym={gym} imagePath={headerImage} />
+        );
+      })}
+    </CardContainer>
+  </GymContainer>
+);
 
 export default Gyms;

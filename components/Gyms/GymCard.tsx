@@ -43,45 +43,27 @@ const Card = styled(Link)`
 type Props = {
   gym: IGym
   imagePath: string
-  refreshData: () => void
 }
 
-const GymCard = ({ gym, imagePath, refreshData }: Props) => (
-  <>
-    <button
-      type="button"
-      onClick={async () => {
-        const res = await fetch('/api/gyms/delete_gym', {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(gym),
-        });
-        if (res.status < 300) refreshData();
-      }}
-    >
-      Delete
-    </button>
-    <Card
-      href={`/gyms/${gym._id}`}
-    >
-      <div id="image">
-        <Image src={imagePath} alt="gym_image" fill />
+const GymCard = ({ gym, imagePath }: Props) => (
+  <Card
+    href={`/gyms/${gym._id}`}
+  >
+    <div id="image">
+      <Image src={imagePath} alt="gym_image" fill />
+    </div>
+    <div id="title">
+      <h3>{gym.name}</h3>
+    </div>
+    <div id="info">
+      <div>
+        Rating:
+        {' '}
+        {gym.overallRating}
       </div>
-      <div id="title">
-        <h3>{gym.name}</h3>
-      </div>
-      <div id="info">
-        <div>
-          Rating:
-          {' '}
-          {gym.overallRating}
-        </div>
-        <div>{gym.location}</div>
-      </div>
-    </Card>
-  </>
+      <div>{gym.location}</div>
+    </div>
+  </Card>
 );
 
 export default GymCard;

@@ -4,21 +4,7 @@ import { IApiResGym, IGym, ISection } from '../../utils/types';
 import CreateFormSection from './CreateFormSection';
 import ImageInput from '../Shared/ImageInput';
 import Input from '../Shared/Input';
-
-interface ButtonProps {
-  themeColor: string
-}
-
-const Button = styled.button<ButtonProps>`
-  width: 100%;
-  background-color: ${(props) => props.theme[props.themeColor]};
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-`;
+import Button from '../Shared/Button';
 
 const CreateFormContainer = styled.form`
   margin: 25px 0;
