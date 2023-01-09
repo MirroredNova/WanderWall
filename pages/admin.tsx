@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import React, { useState } from 'react';
 import LoginForm from '../components/Administration/LoginForm';
 import ManagementPage from '../components/Administration/ManagementPage';
@@ -8,7 +8,7 @@ type Props = {
   gyms: IApiResGym[]
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const gymRes = await fetch(`${process.env.API_URL}/api/gyms/get_gyms`);
   const gymData = await gymRes.json();
   return {
