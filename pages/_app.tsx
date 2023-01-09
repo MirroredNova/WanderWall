@@ -4,6 +4,7 @@ import { Roboto } from '@next/font/google';
 import styled, { ThemeProvider } from 'styled-components';
 import Nav from '../components/Layout/Nav';
 import theme from '../utils/theme';
+import ErrorBoundary from '../components/Layout/ErrorBoundary';
 
 const Main = styled.main`
   color: ${(props) => props.theme.dark};
@@ -21,7 +22,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <ThemeProvider theme={theme}>
       <Main className={robo.className}>
         <Nav />
-        <Component {...pageProps} />
+        <ErrorBoundary>
+          <Component {...pageProps} />
+        </ErrorBoundary>
       </Main>
     </ThemeProvider>
   );

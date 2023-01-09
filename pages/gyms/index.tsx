@@ -1,9 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import styled from 'styled-components';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import GymCard from '../../components/Gyms/GymCard';
 import { IApiResGym } from '../../utils/types';
 
@@ -27,7 +26,7 @@ const CardContainer = styled.div`
   align-items: center;
 `;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const gymRes = await fetch(`${process.env.API_URL}/api/gyms/get_gyms`);
   const gymData = await gymRes.json();
   return {

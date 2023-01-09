@@ -20,21 +20,25 @@ type Props = {
   imagePaths: string[]
 }
 
-const GymCardGallery = ({ imagePaths }: Props) => (
-  <Swiper
-    pagination={{
-      type: 'fraction',
-    }}
-    navigation
-    modules={[Pagination, Navigation]}
-    className="mySwiper"
-  >
-    {imagePaths.map((image, i) => (
-      <SwiperSlideContainer key={+i} style={{ paddingBottom: '5px' }}>
-        <Image src={image} alt="gym_image" width={1000} height={1000} />
-      </SwiperSlideContainer>
-    ))}
-  </Swiper>
-);
+const GymCardGallery = ({ imagePaths }: Props) => {
+  const filteredImagePaths = imagePaths.filter((image) => image);
+
+  return (
+    <Swiper
+      pagination={{
+        type: 'fraction',
+      }}
+      navigation
+      modules={[Pagination, Navigation]}
+      className="mySwiper"
+    >
+      {filteredImagePaths.map((image, i) => (
+        <SwiperSlideContainer key={+i} style={{ paddingBottom: '5px' }}>
+          <Image src={image} alt="gym_image" width={1000} height={1000} />
+        </SwiperSlideContainer>
+      ))}
+    </Swiper>
+  );
+};
 
 export default GymCardGallery;
