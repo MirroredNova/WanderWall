@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import AppCtx from '../../context/appContext';
 
 const NavBar = styled.nav`
   background-color: ${(props) => props.theme.dark};
@@ -68,21 +69,27 @@ const NavList = styled.ul`
   }
 `;
 
-const Nav = () => (
-  <NavBar>
-    <NavTitle>
-      <Link href="/">
-        <Image src="/logo.png" alt="No Image" width="50" height="50" />
-        <h1>WanderWall</h1>
-      </Link>
-    </NavTitle>
-    <NavList>
-      <li><Link href="/">Home</Link></li>
-      <li><Link href="/gyms">Gyms</Link></li>
-      <li><Link href="/travel">Travel</Link></li>
-      <li><Link href="/about">About Me</Link></li>
-    </NavList>
-  </NavBar>
-);
+const Nav = () => {
+  const appContext = useContext(AppCtx);
+  appContext.selectedTab = 'gyms';
+  console.log(appContext.selectedTab);
+
+  return (
+    <NavBar>
+      <NavTitle>
+        <Link href="/">
+          <Image src="/logo.png" alt="No Image" width="50" height="50" />
+          <h1>WanderWall</h1>
+        </Link>
+      </NavTitle>
+      <NavList>
+        <li><Link href="/">Home</Link></li>
+        <li><Link href="/gyms">Gyms</Link></li>
+        <li><Link href="/travel">Travel</Link></li>
+        <li><Link href="/about">About Me</Link></li>
+      </NavList>
+    </NavBar>
+  );
+};
 
 export default Nav;

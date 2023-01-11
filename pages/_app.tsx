@@ -5,6 +5,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import Nav from '../components/Layout/Nav';
 import theme from '../utils/theme';
 import ErrorBoundary from '../components/Layout/ErrorBoundary';
+import AppCtx, { initialAppContext } from '../context/appContext';
 
 const Main = styled.main`
   color: ${(props) => props.theme.dark};
@@ -20,12 +21,14 @@ const robo = Roboto({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
-      <Main className={robo.className}>
-        <Nav />
-        <ErrorBoundary>
-          <Component {...pageProps} />
-        </ErrorBoundary>
-      </Main>
+      <AppCtx.Provider value={initialAppContext}>
+        <Main className={robo.className}>
+          <Nav />
+          <ErrorBoundary>
+            <Component {...pageProps} />
+          </ErrorBoundary>
+        </Main>
+      </AppCtx.Provider>
     </ThemeProvider>
   );
 }
