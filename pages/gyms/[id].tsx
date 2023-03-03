@@ -51,6 +51,8 @@ const GymID = () => {
     }
   }, [router.isReady, router.query]);
 
+  console.log(gym);
+
   return (
     <GymContainer>
       <Head>

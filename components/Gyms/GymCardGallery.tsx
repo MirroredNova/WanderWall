@@ -31,7 +31,7 @@ const GymCardGallery = ({ imagePaths }: Props) => (
   >
     {imagePaths.map((image, i) => (
       <SwiperSlideContainer key={+i} style={{ paddingBottom: '5px' }}>
-        <Image src={image} alt="gym_image" width={1000} height={1000} />
+        {image && <Image src={image} alt="gym_image" width={1000} height={1000} />}
       </SwiperSlideContainer>
     ))}
   </Swiper>
