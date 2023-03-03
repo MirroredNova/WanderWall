@@ -2,14 +2,51 @@ import Head from 'next/head';
 import Chart from 'react-google-charts';
 import styled from 'styled-components';
 
-const data = [
+const HeaderContainer = styled.div`
+  padding: 24px 0;
+  text-align: center;
+`;
+
+const ChartContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+`;
+
+const MapContainer = styled.div`
+  padding: 15px;
+  border: solid 1px lightgray;
+`;
+
+const LegendContainer = styled.div`
+  padding: 20px;
+  margin: auto;
+
+  h2 {
+    margin-bottom: 10px;
+  }
+
+  ul > li {
+    white-space: nowrap;
+  }
+`;
+
+const ColoredBox = styled.span`
+  background-color: ${(props) => props.color};
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+  margin-right: 5px;
+`;
+
+const countryData = [
   ['Country', 'value'],
   ['US', 2000],
   ['MX', 2018],
+  ['CA', 2019],
   ['IS', 2020],
   ['CR', 2021],
   ['GB', 2021],
-  ['CA', 2022],
   ['CH', 2022],
   ['IT', 2022],
   ['VA', 2022],
@@ -24,9 +61,9 @@ const data = [
   ['FI', 2023],
 ];
 
-const options = {
+const countryOptions = {
   colorAxis: {
-    colors: ['#1b2124', '#3e799b', '#578fcc', '#54c1ae', '#45e281', '#bde75b', '#f7ae4e'],
+    colors: ['#1b2124', '#1f5675', '#578fcc', '#54c1ae', '#45e281', '#bde75b', '#f7ae4e'],
     values: [2000, 2018, 2019, 2020, 2021, 2022, 2023],
   },
   legend: 'none',
@@ -34,17 +71,6 @@ const options = {
     trigger: 'none',
   },
 };
-
-const HeaderContainer = styled.div`
-  padding: 24px 0;
-  text-align: center;
-`;
-
-const ChartContainer = styled.div`
-  margin: 15px 0;
-  padding: 15px;
-  border: solid 1px black;
-`;
 
 export default function Travel() {
   return (
@@ -59,9 +85,43 @@ export default function Travel() {
         <HeaderContainer>
           <h1>Travels</h1>
         </HeaderContainer>
-        <p>The Color represents the year of the first time that I visited that country.</p>
         <ChartContainer>
-          <Chart chartType="GeoChart" width="100%" height="700px" data={data} options={options} />
+          <MapContainer>
+            <Chart chartType="GeoChart" width="100%" height="700px" data={countryData} options={countryOptions} />
+          </MapContainer>
+          <LegendContainer>
+            <h2>Legend</h2>
+            <ul>
+              <li>
+                <ColoredBox color="#1b2124" />
+                <span>Home</span>
+              </li>
+              <li>
+                <ColoredBox color="#3e799b" />
+                <span>2018</span>
+              </li>
+              <li>
+                <ColoredBox color="#578fcc" />
+                <span>2019</span>
+              </li>
+              <li>
+                <ColoredBox color="#54c1ae" />
+                <span>2020</span>
+              </li>
+              <li>
+                <ColoredBox color="#45e281" />
+                <span>2021</span>
+              </li>
+              <li>
+                <ColoredBox color="#bde75b" />
+                <span>2022</span>
+              </li>
+              <li>
+                <ColoredBox color="#f7ae4e" />
+                <span>2023</span>
+              </li>
+            </ul>
+          </LegendContainer>
         </ChartContainer>
       </div>
     </div>
